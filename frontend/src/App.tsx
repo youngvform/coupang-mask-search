@@ -65,7 +65,7 @@ function App() {
     return () => {
       clearInterval(id);
     };
-  }, [time, texts, start, results]);
+  }, [time, texts, start, results, count]);
 
   const onSetText = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
