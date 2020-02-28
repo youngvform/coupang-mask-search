@@ -10,7 +10,7 @@ const PORT = 4001;
 const expressApp = express();
 
 const corsConfig: CorsOptions = {
-  origin: 'http://localhost:3001', // permit url
+  origin: ['http://localhost:3000', 'http://localhost:3001'], // permit url
   credentials: true
 };
 expressApp.use(cors(corsConfig));

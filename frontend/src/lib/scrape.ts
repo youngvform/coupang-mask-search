@@ -62,7 +62,7 @@ export async function searchCoupang(texts: string[]) {
   try {
     const {
       data: { results }
-    } = await axios.post('http://192.168.0.17:4001/search', {
+    } = await axios.post('http://localhost:4001/search', {
       urls,
       userAgent: navigator.userAgent
     });
