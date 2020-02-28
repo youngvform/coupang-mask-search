@@ -53,11 +53,14 @@ function getCoupang(html: string) {
 export async function searchCoupang(texts: string[]) {
   const urls: string[] = [];
 
-  texts.forEach(text =>
+  texts.forEach(text => {
     urls.push(
       setUrls.coupang({ text, page: 1, userAgent: navigator.userAgent })
-    )
-  );
+    );
+    urls.push(
+      setUrls.coupangRanking({ text, page: 1, userAgent: navigator.userAgent })
+    );
+  });
 
   try {
     const {
