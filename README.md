@@ -10,7 +10,7 @@ honestly, it was hard to find a mask,
 사용법은 아래 커맨드를 입력하고 http://localhost:3001 로 접속해서     
 원하는 검색어를 입력 후 검색 시작을 눌러주세요.
    usage:   
-1. cd backend && yarn watch    
+1. cd backend && yarn start    
 2. cd ../frontend && yarn start   
 
 visit http://localhost:3001 and search desired thing.
