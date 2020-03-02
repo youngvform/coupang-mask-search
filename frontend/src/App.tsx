@@ -53,17 +53,17 @@ function App() {
   const [results, setResults] = useState<CoupangData[][]>([]);
   const [start, setStart] = useState(false);
   const [count, setCount] = useState(0);
+  const id = useRef(0);
 
   useEffect(() => {
-    let id: number = 0;
     if (start) {
-      id = cron(texts, time, results, setResults, count, setCount);
-      console.log({ results });
-    } else if (id) {
-      clearInterval(id);
+      id.current = cron(texts, time, setResults, setCount);
+    } else if (id.current) {
+      console.log('clear');
+      clearInterval(id.current);
     }
     return () => {
-      clearInterval(id);
+      clearInterval(id.current);
     };
   }, [time, texts, start, results, count]);
 
@@ -95,11 +95,11 @@ function App() {
           alert('주기를 1 부터 59 사이로 입력해주세요.');
           return;
         }
+        api(texts, setResults);
         setCount(count + 1);
       }
 
       setStart(!start);
-      api(texts, setResults);
     },
     [texts, time, start]
   );
@@ -138,19 +138,17 @@ function App() {
 function cron(
   texts: string[],
   time: number,
-  prevResults: CoupangData[][],
-  setResults: (data: CoupangData[][]) => void,
-  count: number,
-  setCount: (count: number) => void
+  setResults: React.Dispatch<React.SetStateAction<CoupangData[][]>>,
+  setCount: React.Dispatch<React.SetStateAction<number>>
 ) {
   const intervalTime = time * (1000 * 60);
 
   const id = setInterval(async () => {
     const results = await searchCoupang(texts);
     if (results && results[0].length) {
-      setResults([...results, ...prevResults]);
+      setResults(prevResults => [...results, ...prevResults]);
     }
-    setCount(count + 1);
+    setCount((prevCount: number) => prevCount + 1);
   }, intervalTime);
 
   return id;
