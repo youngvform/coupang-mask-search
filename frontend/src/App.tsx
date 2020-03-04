@@ -158,7 +158,7 @@ function cron(
 
 async function api(
   texts: string[],
-  setResults: (data: CoupangData[][]) => void
+  setResults: React.Dispatch<React.SetStateAction<CoupangData[][]>>
 ) {
   try {
     const results = await searchCoupang(texts);
