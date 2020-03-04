@@ -47,7 +47,8 @@ function App() {
   const [texts, setTexts] = useState<string[]>([
     'kf94',
     'kf80 마스크',
-    '덴탈 마스크'
+    '덴탈 마스크',
+    'kf 마스크'
   ]);
   const [time, setTime] = useState(1);
   const [results, setResults] = useState<CoupangData[][]>([]);
@@ -56,16 +57,18 @@ function App() {
   const id = useRef(0);
 
   useEffect(() => {
-    if (start) {
-      id.current = cron(texts, time, setResults, setCount);
-    } else if (id.current) {
+    if (id.current) {
       console.log('clear');
       clearInterval(id.current);
+    }
+    if (start) {
+      console.log({ texts });
+      id.current = cron(texts, time, setResults, setCount);
     }
     return () => {
       clearInterval(id.current);
     };
-  }, [time, texts, start, results, count]);
+  }, [start]);
 
   const onSetText = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -118,7 +121,7 @@ function App() {
           />
         </SearchInput>
         <SearchInput>
-          주기 : <Input type="number" value={time} onChange={onSetTime} />
+          주기(분) : <Input type="number" value={time} onChange={onSetTime} />
         </SearchInput>
         <Button type="submit">검색 {start ? '중지' : '시작'}</Button>
       </Layout>
