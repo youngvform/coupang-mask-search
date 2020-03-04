@@ -57,12 +57,11 @@ function App() {
   const id = useRef(0);
 
   useEffect(() => {
-    if (id.current) {
+    if (!start && id.current) {
       console.log('clear');
       clearInterval(id.current);
     }
     if (start) {
-      console.log({ texts });
       id.current = cron(texts, time, setResults, setCount);
     }
     return () => {
@@ -99,7 +98,7 @@ function App() {
           return;
         }
         api(texts, setResults);
-        setCount(count + 1);
+        setCount(1);
       }
 
       setStart(!start);
