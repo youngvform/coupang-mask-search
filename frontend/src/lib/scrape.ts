@@ -21,7 +21,7 @@ function getCoupang(html: string) {
   contensts.each((i, el) => {
     const $element = $(el).find('dl.search-product-wrap');
     if ($element.find('.out-of-stock').length > 0) {
-      console.log('out of stock');
+      console.log(`out of stock : ${$element.find('.name').text()} `);
       return true;
     }
 
@@ -79,6 +79,7 @@ export async function searchCoupang(texts: string[]) {
     });
     return datas;
   } catch (err) {
-    throw new Error('ERROR In searchCoupang : ' + err);
+    console.log('error frontend');
+    console.log(err);
   }
 }

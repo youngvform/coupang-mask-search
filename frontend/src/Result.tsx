@@ -3,8 +3,14 @@ import styled from 'styled-components';
 
 import { CoupangData } from './types/types';
 
+export interface Option {
+  body: string;
+}
+
 interface Props {
   result: CoupangData[];
+  notiPermit: React.MutableRefObject<boolean>;
+  saveNotiId: (options: Option) => void;
 }
 
 const Layout = styled.div`
@@ -20,7 +26,16 @@ const Link = styled.a`
   color: black;
 `;
 
-const Result: FC<Props> = ({ result }) => {
+const Result: FC<Props> = ({ result, notiPermit, saveNotiId }) => {
+  if (result.length) {
+    if (notiPermit.current) {
+      const options = {
+        body: `${result.length}개 결과가 있습니다!`
+      };
+
+      saveNotiId(options);
+    }
+  }
   return (
     <div>
       {result.map(res => (

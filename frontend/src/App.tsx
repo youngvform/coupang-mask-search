@@ -9,7 +9,7 @@ import React, {
 import styled from 'styled-components';
 import axios from 'axios';
 
-import Result from './Result';
+import Result, { Option } from './Result';
 import { searchCoupang } from './lib/scrape';
 import { CoupangData } from './types/types';
 
@@ -55,8 +55,20 @@ function App() {
   const [start, setStart] = useState(false);
   const [count, setCount] = useState(0);
   const id = useRef(0);
+  const notiPermit = useRef(false);
+  const notiId = useRef<Notification>();
 
   useEffect(() => {
+    if (!notiPermit.current) {
+      Notification.requestPermission(function(result) {
+        //요청을 거절하면,
+        if (result === 'denied') {
+          return;
+        }
+
+        notiPermit.current = true;
+      });
+    }
     if (!start && id.current) {
       console.log('clear');
       clearInterval(id.current);
@@ -84,6 +96,15 @@ function App() {
     },
     [time]
   );
+
+  const saveNotiId = useCallback((options: Option) => {
+    if (notiId.current) {
+      console.log('noti close');
+      console.log({ noti: notiId.current });
+      notiId.current.close();
+    }
+    notiId.current = new Notification('Yellow Mask Search', options);
+  }, []);
 
   const onSearch = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -128,7 +149,12 @@ function App() {
         {count}회 시도.
         {results.length ? (
           results.map((result, i) => (
-            <Result key={`result_${i}`} result={result} />
+            <Result
+              key={`result_${i}`}
+              result={result}
+              notiPermit={notiPermit}
+              saveNotiId={saveNotiId}
+            />
           ))
         ) : (
           <h3>결과 없음</h3>

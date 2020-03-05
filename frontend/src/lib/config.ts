@@ -5,7 +5,7 @@ export const urls = {
     url: 'https://www.coupang.com',
     search: '/np/search?q=',
     page:
-      '&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=rocket%2Ccoupang_global&isPriceRange=false&priceRange=&minPrice=&maxPrice=&trcid=&traid=&filterSetByUser=true&channel=recent&backgroundColor=&component=&rating=0&sorter=latestAsc&listSize=72&rocketAll=true&page='
+      '&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=rocket%2Ccoupang_global&isPriceRange=false&priceRange=&minPrice=&maxPrice=&trcid=&traid=&filterSetByUser=true&channel=recent&backgroundColor=&component=&rating=0&sorter=latestAsc&listSize=36&rocketAll=true&page='
   },
   coupangRanking: {
     page:
