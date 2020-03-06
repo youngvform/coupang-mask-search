@@ -99,6 +99,14 @@ function App() {
 
   const saveNotiId = useCallback((options: Option) => {
     if (notiId.current) {
+      // 한 주기에 한 번만 노티를 한다.
+      const notiTime = new Date(notiId.current.timestamp);
+      let closeTime = notiTime;
+      closeTime.setMinutes(notiTime.getMinutes() + time);
+      const curTime = new Date();
+      if (curTime.getTime() <= closeTime.getTime()) {
+        return;
+      }
       console.log('noti close');
       console.log({ noti: notiId.current });
       notiId.current.close();
